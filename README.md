@@ -1,0 +1,1 @@
+This is the first week project at Makers Academy.
