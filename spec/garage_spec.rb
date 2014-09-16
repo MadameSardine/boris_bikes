@@ -13,7 +13,6 @@ describe Garage do
 	it "should only dock fixed bikes" do
 		bike.break!
 		garage.dock(bike)
-
-		garage.bikes.each { |bike| expect(bike).not_to be_broken }
+		expect(bike).not_to be_broken
  	end
 end
