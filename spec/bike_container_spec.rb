@@ -1,5 +1,6 @@
 require './lib/bike_container'
 require './lib/bike'
+require './lib/van'
 
 class ContainerHolder; include BikeContainer; end
 
@@ -15,6 +16,19 @@ describe BikeContainer do
     holder.dock(bike)    
     # now we expect the holder to have 1 bike
     expect(holder.bike_count).to eq(1)
+  end
+
+  it "should not accept anything than a bike" do
+    not_a_bike = Van.new
+    expect { holder.dock(not_a_bike) }.to raise_error(RuntimeError)
+  end
+
+  it "should raise an error if no argument in dock()" do
+    expect { holder.dock() }.to raise_error(RuntimeError)
+  end
+
+  it "should raise an error if dock(nil)" do
+    expect { holder.dock(nil) }.to raise_error(RuntimeError)
   end
 
   it "should release a bike" do
@@ -44,5 +58,28 @@ describe BikeContainer do
     holder.dock(working_bike)
     holder.dock(broken_bike)
     expect(holder.available_bikes).to eq([working_bike])
+  end
+
+  it "should only release a bike if it exists" do
+  expect { holder.release(nil) }.to raise_error(RuntimeError) 
+  end
+
+  it "should raise an error if arg is empty in release(arg)" do
+    expect{holder.release()}.to raise_error(RuntimeError)
+  end
+
+  it "should not release anything else than a bike" do
+    not_a_bike = Van.new
+    expect { holder.release(not_a_bike) }.to raise_error(RuntimeError)
+  end
+
+  it "should not release a bike if holder is empty" do
+    expect {holder.release(bike)}.to raise_error(RuntimeError)
+  end
+
+  it "should not release a bike which is not in the container" do
+    bike1, bike2 = Bike.new, Bike.new
+    holder.dock(bike1)
+    expect { holder.release(bike2)}.to raise_error(RuntimeError)
   end
 end

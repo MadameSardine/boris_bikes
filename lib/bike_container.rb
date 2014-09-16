@@ -18,12 +18,20 @@ module BikeContainer
     bikes.count
   end
 
-  def dock(bike)
+  def dock(bike=nil)
+    raise_not_a_bike_error_msg(bike)
     raise "Maximum capacity is reached" if full?
     bikes << bike
   end
 
-  def release(bike)
+  def raise_not_a_bike_error_msg(bike)
+     raise "This is not a bike" if !bike.is_a?(Bike)
+   end
+
+  def release(bike=nil)
+     raise_not_a_bike_error_msg(bike)
+     raise "There is no bike in the container" if bike_count == 0
+     raise "This bike is not in this container" if !bikes.include? bike
     bikes.delete(bike)
   end
 
