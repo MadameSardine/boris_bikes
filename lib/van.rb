@@ -9,5 +9,4 @@ class Van
   def initialize(options = {})    
     self.capacity = options.fetch(:capacity, capacity)
   end
-
 end
