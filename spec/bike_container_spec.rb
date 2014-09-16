@@ -35,7 +35,7 @@ describe BikeContainer do
   end
 
   def fill_holder(holder)
-    20.times {holder.dock(Bike.new)}
+    holder.capacity.times {holder.dock(Bike.new)}
   end
 
   it "should provide the list of available bikes" do
