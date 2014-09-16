@@ -82,4 +82,11 @@ describe BikeContainer do
     holder.dock(bike1)
     expect { holder.release(bike2)}.to raise_error(RuntimeError)
   end
+
+  it "should be empty if it has no bikes" do
+    expect(holder).to be_empty
+  end
+
+
+
 end
