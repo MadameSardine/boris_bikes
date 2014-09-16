@@ -3,15 +3,17 @@ require_relative 'bike_container'
 
 class Garage
 
-  # this gives us all the methods that used to be in this class
-  include BikeContainer
+  	# this gives us all the methods that used to be in this class
+  	include BikeContainer
 
-  def initialize(options = {})    
-    self.capacity = options.fetch(:capacity, capacity)
-  end
+	alias_method :old_dock, :dock
 
-  def accept(bike)
-  	bike.fix!
-  	dock(bike)
-  end
+  	def initialize(options = {})    
+   		self.capacity = options.fetch(:capacity, capacity)
+  	end
+ 
+  	def dock(bike)
+  		bike.fix!
+  		old_dock(bike)
+  	end
 end
