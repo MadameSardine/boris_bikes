@@ -14,10 +14,9 @@ class DockingStation
     self.capacity = options.fetch(:capacity, capacity)
   end
 
-  def broken_bikes 
-  	bikes.select{ |bike| bike.broken? }
-  	# bikes - available_bikes
-  
+  def release_available_bike
+  	bike = available_bikes.pop
+  	release(bike)
   end
 
 end
