@@ -18,4 +18,8 @@ def return_to(station)
 	@bike = nil
 end
 
+def accident
+	@bike.break!
+end
+
 end

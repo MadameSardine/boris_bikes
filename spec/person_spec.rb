@@ -36,4 +36,10 @@ describe Person do
 		expect{person.rent_from(station)}.to raise_error(RuntimeError)
 	end
 
+	it 'can break a bike if it has an accident' do
+		person = Person.new(bike)
+		expect(bike).to receive(:break!)
+		person.accident
+	end
+
 end
