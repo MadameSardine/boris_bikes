@@ -36,7 +36,7 @@ class Van
   		release(bike) 
   		recipient.dock(bike)
   	end
-
   end
 
+  
 end

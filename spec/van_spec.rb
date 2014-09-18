@@ -17,8 +17,7 @@ describe Van do
 
 	it "should only collect broken bikes from stations" do 
 		station.dock(bike)
-		broken_bike.break!
-		station.dock(broken_bike)
+		break_and_dock_bike(station)
 		van.collect_from(station)
 		expect(van.bikes).to eq([broken_bike])
 	end
@@ -38,11 +37,14 @@ describe Van do
 		expect{ van.collect_from(garage)}.to raise_error(RuntimeError)
 	end
 
+	def break_and_dock_bike(holder)
+		broken_bike.break!
+		holder.dock(broken_bike)
+	end
 
 	def dock_bike_and_broken_bike_in_van 
 		van.dock(bike)
-		broken_bike.break!
-		van.dock(broken_bike)	
+		break_and_dock_bike(van)	
 	end
 
 	it 'should only release broken bikes to garage' do
@@ -70,7 +72,9 @@ describe Van do
 
  	it 'should only drop of a broken bike to the garage if the garage can dock it' do
     	dock_bike_and_broken_bike_in_van
-    	expect(garage).to receive(:dock)
+    	expect(garage).to receive(:dock).with(broken_bike)
     	van.drop_off_to(garage)
   	end
+
+
 end

@@ -7,6 +7,7 @@ class ContainerHolder; include BikeContainer; end
 describe BikeContainer do
 
   let(:bike) { Bike.new }
+  let(:broken_bike) {Bike.new}
   let(:holder) { ContainerHolder.new}
 
   it "should accept a bike" do        
@@ -52,19 +53,20 @@ describe BikeContainer do
     holder.capacity.times {holder.dock(Bike.new)}
   end
 
-  it "should provide the list of available bikes" do
-    working_bike, broken_bike = Bike.new, Bike.new
+  def dock_bike_and_broken_bike(holder)
     broken_bike.break!
-    holder.dock(working_bike)
+    holder.dock(bike)
     holder.dock(broken_bike)
-    expect(holder.available_bikes).to eq([working_bike])
+  end
+
+
+  it "should provide the list of available bikes" do
+    dock_bike_and_broken_bike(holder)
+    expect(holder.available_bikes).to eq([bike])
   end
 
   it "should know which bikes are broken" do
-    working_bike, broken_bike = Bike.new, Bike.new
-    broken_bike.break!
-    holder.dock(working_bike)
-    holder.dock(broken_bike)
+    dock_bike_and_broken_bike(holder)
     expect(holder.broken_bikes).to eq([broken_bike])
   end
 
@@ -86,9 +88,8 @@ describe BikeContainer do
   end
 
   it "should not release a bike which is not in the container" do
-    bike1, bike2 = Bike.new, Bike.new
-    holder.dock(bike1)
-    expect { holder.release(bike2)}.to raise_error(RuntimeError)
+    holder.dock(bike)
+    expect { holder.release(broken_bike)}.to raise_error(RuntimeError)
   end
 
   it "should be empty if it has no bikes" do
