@@ -67,4 +67,10 @@ describe Van do
 		expect(van.available_bikes.count).to eq(0)
 		expect(van.broken_bikes.count).to eq(1)
  	end
+
+ 	it 'should only drop of a broken bike to the garage if the garage can dock it' do
+    	dock_bike_and_broken_bike_in_van
+    	expect(garage).to receive(:dock)
+    	van.drop_off_to(garage)
+  	end
 end
