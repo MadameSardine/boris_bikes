@@ -21,8 +21,14 @@ describe Person do
 	end
 
 	it 'can rent a bike from a station' do
+		expect(station).to receive(:release_available_bike)
+		person.rent_from(station)
+	end
+
+	it "has a bike after renting form a station" do
 		station.dock(bike)
 		person.rent_from(station)
+		expect(person).to have_bike
 	end
 
 	it 'can return a bike to a station' do
